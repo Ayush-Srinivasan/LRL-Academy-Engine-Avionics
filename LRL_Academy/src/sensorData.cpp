@@ -44,6 +44,10 @@ Adafruit_MAX31855 tcConverging3(TC4_CS, CLK, MISO);
 Adafruit_MAX31855 tcThroat(TC5_CS, CLK, MISO);
 Adafruit_MAX31855 tcDiverging(TC6_CS, CLK, MISO);
 
+//time
+unsigned long sensorStartTime = 0;
+unsigned long readTime = 500;
+
 // put function declarations here:
 float readPressureData(int16_t adcnumber, int PSI);
 
@@ -94,6 +98,9 @@ void setup() {
 }
 
 void loop() {
+  if (millis() - sensorStartTime >= readTime) {  
+    sensorStartTime = millis();  // Reset the timer
+
 
   // ads read data
   int16_t PT1 = ads1.readADC_SingleEnded(adc1);
@@ -124,7 +131,8 @@ void loop() {
   float ThroatTemp = tcThroat.readCelsius();
   float DivergingTemp = tcDiverging.readCelsius();  
 
- // print data
+ // print data (this will be changed when gui is available)
+
   Serial.print("TC1: "); Serial.println(InjectorTemp);
   Serial.print("TC2: "); Serial.println(Converging1Temp);
   Serial.print("TC3: "); Serial.println(Converging2Temp);
@@ -140,9 +148,8 @@ void loop() {
   Serial.print("PT7: "); Serial.println(PT07);
   Serial.print("PT8: "); Serial.println(PT08);
   Serial.println("--------------------");
-
-  //delay
-  delay(500);
+  }
+  
 }
 
 float readPressureData(int16_t adcnumber, int PSI) {
@@ -150,3 +157,4 @@ float readPressureData(int16_t adcnumber, int PSI) {
   float pressure = PSI * ((voltage-0.5)/4); //converts voltage to psi
   return pressure; //returns pressure
 }
+

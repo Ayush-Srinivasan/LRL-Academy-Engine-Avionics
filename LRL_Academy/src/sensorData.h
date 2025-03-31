@@ -27,6 +27,10 @@ const int TC4_CS = 3;
 const int TC5_CS = 4;
 const int TC6_CS = 5; 
 
+//time
+extern unsigned long sensorStartTime;
+extern unsigned long readTime;
+
 //functions
 float readPressureData(int16_t adcnumber, int PSI);
 
