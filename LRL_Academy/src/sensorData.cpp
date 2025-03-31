@@ -107,14 +107,14 @@ void loop() {
 
 
   //converts from voltage to psi 
-  float PT01 = readPressureData(PT1);
-  float PT02 = readPressureData(PT2);
-  float PT03 = readPressureData(PT3);
-  float PT04 = readPressureData(PT4);
-  float PT05 = readPressureData(PT5);
-  float PT06 = readPressureData(PT6);
-  float PT07 = readPressureData(PT7);
-  float PT08 = readPressureData(PT8);
+  float PT01 = readPressureData(PT1, 300);
+  float PT02 = readPressureData(PT2, 300);
+  float PT03 = readPressureData(PT3, 300);
+  float PT04 = readPressureData(PT4, 300);
+  float PT05 = readPressureData(PT5, 300);
+  float PT06 = readPressureData(PT6, 300);
+  float PT07 = readPressureData(PT7, 300);
+  float PT08 = readPressureData(PT8, 300);
 
   // MAX31855 read data
   float InjectorTemp = tcInjector.readCelsius();
