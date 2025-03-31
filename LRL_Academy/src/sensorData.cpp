@@ -8,7 +8,6 @@
 //initalizing ads 1115
 Adafruit_ADS1115 ads1; //first ads 1115 (for pts 1-4) gnd connection (address 0x48)
 Adafruit_ADS1115 ads2; //second ads 1115 (for pts 5-8) vdd connection (address 0x49)
-const int PSI = 300;
 const float ADS_Gain = 0.1875/1000;
 
 //pt port variables (0,1,2,3, are the adc ports)
@@ -46,7 +45,7 @@ Adafruit_MAX31855 tcThroat(TC5_CS, CLK, MISO);
 Adafruit_MAX31855 tcDiverging(TC6_CS, CLK, MISO);
 
 // put function declarations here:
-float readPressureData(int16_t adcnumber);
+float readPressureData(int16_t adcnumber, int PSI);
 
 
 void setup() {
@@ -146,7 +145,7 @@ void loop() {
   delay(500);
 }
 
-float readPressureData(int16_t adcnumber) {
+float readPressureData(int16_t adcnumber, int PSI) {
   float voltage = adcnumber * ADS_Gain; // multiplies ADS values by gain value
   float pressure = PSI * ((voltage-0.5)/4); //converts voltage to psi
   return pressure; //returns pressure

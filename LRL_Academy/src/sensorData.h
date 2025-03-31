@@ -28,6 +28,6 @@ const int TC5_CS = 4;
 const int TC6_CS = 5; 
 
 //functions
-float readPressureData(int16_t adcnumber);
+float readPressureData(int16_t adcnumber, int PSI);
 
 #endif
