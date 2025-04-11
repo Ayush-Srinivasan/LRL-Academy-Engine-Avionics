@@ -13,11 +13,11 @@ const int openPositions[6] = {180, 180, 180, 180, 180, 180};
 const int closedPositions[6] = {0, 0, 0, 0, 0, 0}; 
 
 // extra PWM outputs
-const int gpPWMOutput1 = 36; // extra PWM for any extra stuff
-const int gpPWMOutput2 = 33; // extra PWM for any extra stuff
+const int gpPWMOutput1 = 5; // extra PWM for any extra stuff
+const int gpPWMOutput2 = 4; // extra PWM for any extra stuff
 
 //Pyro channel initialization
-const int pyro1 = 28; // pyro channel
+const int pyro1 = 8; // pyro channel
 bool pyroFiring = false; // flag to track if pyro channel is firing
 unsigned long pyroStartTime = 0;
 
@@ -35,12 +35,12 @@ void closeFuelOutlet();
 
 void setup() {
     // initalizes all servos
-    mainFuelBallValve.attach(11); 
-    outletFuelBallValve.attach(24);
-    oxidizerFuelBallValve.attach(25);
-    turbine1Valve.attach(29);
-    turbine2Valve.attach(14);
-    servoBallValveExtra1.attach(37);
+    mainFuelBallValve.attach(0); 
+    outletFuelBallValve.attach(1);
+    oxidizerFuelBallValve.attach(2);
+    turbine1Valve.attach(3);
+    turbine2Valve.attach(7);
+    servoBallValveExtra1.attach(6);
 
     // initalizes all pins
     pinMode(gpPWMOutput1, OUTPUT);
@@ -115,3 +115,4 @@ void shutDown() {
 void closeFuelOutlet() {
     closedServo(outletFuelBallValve, 1);
 }
+
