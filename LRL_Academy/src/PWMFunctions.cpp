@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <Servo.h>
-#include <PWMFunctions.h>
+#include "PWMFunctions.h"
 
 //servo outputs
 Servo mainFuelBallValve; // fuel inlet ball valve (0)
@@ -8,7 +8,7 @@ Servo outletFuelBallValve; // fuel outlet ball valve (1)
 Servo oxidizerFuelBallValve; // gox ball valve (2)
 Servo turbine1Valve; // turbine 1 N2 valve (3)
 Servo turbine2Valve; // turbine 2 N2 valve (4)
-Servo servoBallValveExtra1; // extra servo output (5)
+Servo airBleedValve; // air bleed valve servo output (5)
 const int openPositions[6] = {180, 180, 180, 180, 180, 180}; 
 const int closedPositions[6] = {0, 0, 0, 0, 0, 0}; 
 
@@ -22,7 +22,7 @@ bool pyroFiring = false; // flag to track if pyro channel is firing
 unsigned long pyroStartTime = 0;
 
 // function declarations:
-void pyroCharge(int firingTime);
+void pyroCharge(unsigned long firingTime);
 void openServo (Servo &servoName, int valveindex);
 void closedServo (Servo &servoName, int valveindex);
 
@@ -33,14 +33,14 @@ void letsBurnThisCandle();
 void shutDown();
 void closeFuelOutlet();
 
-void setup() {
+void initializeHardware() { //system initialization
     // initalizes all servos
     mainFuelBallValve.attach(0); 
     outletFuelBallValve.attach(1);
     oxidizerFuelBallValve.attach(2);
     turbine1Valve.attach(3);
     turbine2Valve.attach(7);
-    servoBallValveExtra1.attach(6);
+    airBleedValve.attach(6);
 
     // initalizes all pins
     pinMode(gpPWMOutput1, OUTPUT);
@@ -53,7 +53,7 @@ void setup() {
     closedServo(oxidizerFuelBallValve, 2); //closes servo 3
     closedServo(turbine1Valve, 3); //closes servo 4
     closedServo(turbine2Valve, 4); //closes servo 5
-    closedServo(servoBallValveExtra1, 5); //closes servo 6
+    closedServo(airBleedValve, 5); //closes servo 6
 
     // ensures all PWM and Pyro outputs start LOW
     digitalWrite(gpPWMOutput1, LOW);
@@ -63,12 +63,9 @@ void setup() {
     delay(10000); //keep this a delay as we need to make sure everything is in their positions they are meant to be in
 }
 
-void loop() {
-  // nothing I need to add
-}
 
 // function definitions:
-void pyroCharge(int firingTime) { //firing time is in milliseconds so be careful
+void pyroCharge(unsigned long firingTime) { //firing time is in milliseconds so be careful
     if (!pyroFiring) {
         digitalWrite(pyro1, HIGH); //fires pyro charge for x seconds based on time value given in firing time
         pyroStartTime = millis();
@@ -90,14 +87,23 @@ void closedServo (Servo &servoName, int valveindex) { // index goes from 0-5 (ar
     servoName.write(closedPositions[valveindex]); // closes servo
 }
 
+void openBleedValve() {
+    openServo(airBleedValve, 5);
+}
+
 void openFuelOutlet() { // opens up fuel outlet valve as stated in procedures
     openServo(outletFuelBallValve, 1);
+}
+
+void closeBleedValve() {
+    closedServo(airBleedValve, 5);
 }
 
 void openTurbines() { //opens up turbine valves as stated in procedures
     openServo(turbine1Valve, 3);
     openServo(turbine2Valve, 4);
 }
+
 
 void letsBurnThisCandle() { //opens up turbine valves as stated in procedures (check if we need timings for this)
     pyroCharge(2000);
