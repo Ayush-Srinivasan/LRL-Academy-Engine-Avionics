@@ -50,9 +50,10 @@ unsigned long readTime = 500;
 
 // put function declarations here:
 float readPressureData(int16_t adcnumber, int PSI);
+void readData();
+void setupDataReading();
 
-
-void setup() {
+void setupDataReading() {
   Serial.begin(9600);
 
   //ads initialize
@@ -97,7 +98,7 @@ void setup() {
   }
 }
 
-void loop() {
+void readData() {
   if (millis() - sensorStartTime >= readTime) {  
     sensorStartTime = millis();  // Reset the timer
 

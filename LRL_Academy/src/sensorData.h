@@ -33,5 +33,7 @@ extern unsigned long readTime;
 
 //functions
 float readPressureData(int16_t adcnumber, int PSI);
+void readData();
+void setupDataReading();
 
 #endif
