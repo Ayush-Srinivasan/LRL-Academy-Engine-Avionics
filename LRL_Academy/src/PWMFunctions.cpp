@@ -2,6 +2,16 @@
 #include <Servo.h>
 #include "PWMFunctions.h"
 
+//pwm pins for servos
+const int S1 = 3;
+const int S2 = 2;
+const int S3 = 1;
+const int S4 = 0;
+const int S5 = 7;
+const int S6 = 6;
+const int S7 = 5;
+const int S8 = 4;
+
 //servo outputs
 Servo mainFuelBallValve; // fuel inlet ball valve (0)
 Servo outletFuelBallValve; // fuel outlet ball valve (1)
@@ -9,8 +19,8 @@ Servo oxidizerFuelBallValve; // gox ball valve (2)
 Servo turbine1Valve; // turbine 1 N2 valve (3)
 Servo turbine2Valve; // turbine 2 N2 valve (4)
 Servo airBleedValve; // air bleed valve servo output (5)
-const int openPositions[6] = {180, 180, 180, 180, 180, 180}; 
-const int closedPositions[6] = {0, 0, 0, 0, 0, 0}; 
+const int openPositions[6] = {180, 180, 180, 180, 180, 180}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
+const int closedPositions[6] = {0, 0, 0, 0, 0, 0}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
 
 // extra PWM outputs
 const int gpPWMOutput1 = 5; // extra PWM for any extra stuff
@@ -35,12 +45,12 @@ void closeFuelOutlet();
 
 void initializeHardware() { //system initialization
     // initalizes all servos
-    mainFuelBallValve.attach(0); 
-    outletFuelBallValve.attach(1);
-    oxidizerFuelBallValve.attach(2);
-    turbine1Valve.attach(3);
-    turbine2Valve.attach(7);
-    airBleedValve.attach(6);
+    mainFuelBallValve.attach(S4); 
+    outletFuelBallValve.attach(S3);
+    oxidizerFuelBallValve.attach(S2);
+    turbine1Valve.attach(S1);
+    turbine2Valve.attach(S8);
+    airBleedValve.attach(S7);
 
     // initalizes all pins
     pinMode(gpPWMOutput1, OUTPUT);
@@ -87,7 +97,7 @@ void closedServo (Servo &servoName, int valveindex) { // index goes from 0-5 (ar
     servoName.write(closedPositions[valveindex]); // closes servo
 }
 
-void openBleedValve() {
+void openBleedValve() { // opens fuel bleed valve (purges air from system)
     openServo(airBleedValve, 5);
 }
 
@@ -95,7 +105,7 @@ void openFuelOutlet() { // opens up fuel outlet valve as stated in procedures
     openServo(outletFuelBallValve, 1);
 }
 
-void closeBleedValve() {
+void closeBleedValve() { // closes fuel bleed valve (purges air from system)
     closedServo(airBleedValve, 5);
 }
 

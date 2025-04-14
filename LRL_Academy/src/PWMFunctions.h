@@ -4,6 +4,16 @@
 #include <Arduino.h>
 #include <Servo.h>
 
+//declarations of servo pins
+extern const int S1;
+extern const int S2;
+extern const int S3;
+extern const int S4;
+extern const int S5;
+extern const int S6;
+extern const int S7;
+extern const int S8;
+
 // Declarations of the Servo objects and constants, but not definitions
 extern Servo mainFuelBallValve;  
 extern Servo outletFuelBallValve; 
