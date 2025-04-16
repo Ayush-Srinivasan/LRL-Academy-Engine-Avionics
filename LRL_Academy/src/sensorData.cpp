@@ -1,9 +1,9 @@
-#include <Arduino.h>
+#include "Arduino.h"
 #include "sensorData.h"
 
 //PT libraries and variables
-#include <Wire.h>
-#include <Adafruit_ADS1X15.h>
+#include "Wire.h"
+#include "Adafruit_ADS1X15.h"
 
 //initalizing ads 1115
 Adafruit_ADS1115 ads1; //first ads 1115 (for pts 1-4) gnd connection (address 0x48)
@@ -22,7 +22,7 @@ const int adc7 = 2; //AIN2 on ads2
 const int adc8 = 3; //AIN3 on ads2
 
 //TC libraries and variables
-#include <SPI.h>
+#include "SPI.h"
 #include "Adafruit_MAX31855.h"
 const int MISO = 12;
 const int CLK = 27;
@@ -54,17 +54,16 @@ void readData();
 void setupDataReading();
 
 void setupDataReading() {
-  Serial.begin(9600);
 
   //ads initialize
   if (!ads1.begin(0x48)) {
-    Serial.println("ADS1 failure");
+    Serial1.println("ADS1 failure");
     while(1);
   }
   ads1.setGain(GAIN_TWOTHIRDS);
   
   if (!ads2.begin(0x49)) {
-    Serial.println("ADS2 failure");
+    Serial1.println("ADS2 failure");
     while(1);
   }
   ads2.setGain(GAIN_TWOTHIRDS);
@@ -73,27 +72,27 @@ void setupDataReading() {
 
   //max initialize
   if (!tcInjector.begin()) {
-    Serial.println("TC1 failure");
+    Serial1.println("TC1 failure");
     while (1);
   }
   if (!tcConverging1.begin()) {
-    Serial.println("TC2 failure");
+    Serial1.println("TC2 failure");
     while (1);
   }
   if (!tcConverging2.begin()) {
-    Serial.println("TC3 failure");
+    Serial1.println("TC3 failure");
     while (1);
   }
   if (!tcConverging3.begin()) {
-    Serial.println("TC4 failure");
+    Serial1.println("TC4 failure");
     while (1);
   }
   if (!tcThroat.begin()) {
-    Serial.println("TC5 failure");
+    Serial1.println("TC5 failure");
     while (1);
   }
   if (!tcDiverging.begin()) {
-    Serial.println("TC6 failure");
+    Serial1.println("TC6 failure");
     while (1);
   }
 }
@@ -134,21 +133,21 @@ void readData() {
 
  // print data (this will be changed when gui is available)
 
-  Serial.print("TC1: "); Serial.println(InjectorTemp);
-  Serial.print("TC2: "); Serial.println(Converging1Temp);
-  Serial.print("TC3: "); Serial.println(Converging2Temp);
-  Serial.print("TC4: "); Serial.println(Converging3Temp);
-  Serial.print("TC5: "); Serial.println(ThroatTemp);
-  Serial.print("TC6: "); Serial.println(DivergingTemp);
-  Serial.print("PT1: "); Serial.println(PT01);
-  Serial.print("PT2: "); Serial.println(PT02);
-  Serial.print("PT3: "); Serial.println(PT03);
-  Serial.print("PT4: "); Serial.println(PT04);
-  Serial.print("PT5: "); Serial.println(PT05);
-  Serial.print("PT6: "); Serial.println(PT06);
-  Serial.print("PT7: "); Serial.println(PT07);
-  Serial.print("PT8: "); Serial.println(PT08);
-  Serial.println("--------------------");
+  Serial1.print("TC1: "); Serial1.println(InjectorTemp);
+  Serial1.print("TC2: "); Serial1.println(Converging1Temp);
+  Serial1.print("TC3: "); Serial1.println(Converging2Temp);
+  Serial1.print("TC4: "); Serial1.println(Converging3Temp);
+  Serial1.print("TC5: "); Serial1.println(ThroatTemp);
+  Serial1.print("TC6: "); Serial1.println(DivergingTemp);
+  Serial1.print("PT1: "); Serial1.println(PT01);
+  Serial1.print("PT2: "); Serial1.println(PT02);
+  Serial1.print("PT3: "); Serial1.println(PT03);
+  Serial1.print("PT4: "); Serial1.println(PT04);
+  Serial1.print("PT5: "); Serial1.println(PT05);
+  Serial1.print("PT6: "); Serial1.println(PT06);
+  Serial1.print("PT7: "); Serial1.println(PT07);
+  Serial1.print("PT8: "); Serial1.println(PT08);
+  Serial1.println("--------------------");
   }
   
 }

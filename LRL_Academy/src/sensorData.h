@@ -1,11 +1,11 @@
 #ifndef SENSORDATA_H
 #define SENSORDATA_H
 
-#include <Arduino.h>
-#include <Wire.h>
-#include <Adafruit_ADS1X15.h>
-#include <SPI.h>
-#include <Adafruit_MAX31855.h>
+#include "Arduino.h"
+#include "Wire.h"
+#include "Adafruit_ADS1X15.h"
+#include "SPI.h"
+#include "Adafruit_MAX31855.h"
 
 //constants
 const int PSI = 300;
