@@ -2,32 +2,22 @@
 #define PWMFUNCTIONS_H
 
 #include <Arduino.h>
-#include <Servo.h>
+#include <PWMServo.h>
 
-//declarations of servo pins
-extern const int S1;
-extern const int S2;
-extern const int S3;
-extern const int S4;
-extern const int S5;
-extern const int S6;
-extern const int S7;
-extern const int S8;
 
 // Declarations of the Servo objects and constants, but not definitions
-extern Servo mainFuelBallValve;  
-extern Servo outletFuelBallValve; 
-extern Servo oxidizerFuelBallValve; 
-extern Servo turbine1Valve; 
-extern Servo turbine2Valve; 
-extern Servo airBleedValve; 
+extern PWMServo mainFuelBallValve;  
+extern PWMServo outletFuelBallValve; 
+extern PWMServo oxidizerFuelBallValve; 
+extern PWMServo turbine1Valve; 
+extern PWMServo turbine2Valve; 
+extern PWMServo airBleedValve; 
 
 extern const int openPositions[6]; // positions for open valves
 extern const int closedPositions[6]; // positions for closed valves
 
 // Declarations for extra PWM outputs
 extern const int gpPWMOutput1; 
-extern const int gpPWMOutput2;
 
 // Pyro channel initialization
 void initializeHardware();
@@ -37,8 +27,8 @@ extern unsigned long pyroStartTime; // time when pyro started firing
 
 // Function declarations
 void pyroCharge(unsigned long firingTime);
-void openServo(Servo &servoName, int valveindex);
-void closedServo(Servo &servoName, int valveindex);
+void openServo(PWMServo &servoName, int valveindex);
+void closedServo(PWMServo &servoName, int valveindex);
 
 //firing functions
 void openBleedValve();
@@ -48,5 +38,6 @@ void openTurbines();
 void letsBurnThisCandle();
 void shutDown();
 void closeFuelOutlet();
+void abort();
 
 #endif // PWMFUNCTIONS_H
