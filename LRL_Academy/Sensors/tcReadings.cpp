@@ -5,8 +5,8 @@
 #include "SPI.h"
 #include "Adafruit_MAX31855.h"
 
-static const int MISO = 12; //MISO Pin
-static const int CLK = 27; //CLOCK Pin
+//static const int MISO = 12; //MISO Pin (dont need as hardware sets it)
+//static const int CLK = 27; //CLOCK Pin (dont need as hardware sets it)
 
 //tc pin chip select numbers
 static const int TC1_CS = 0;
@@ -18,12 +18,12 @@ static const int TC6_CS = 5;
 
 
 //initalizing MAX31855
-static Adafruit_MAX31855 tcInjector(TC1_CS, CLK, MISO);
-static Adafruit_MAX31855 tcConverging1(TC2_CS, CLK, MISO);
-static Adafruit_MAX31855 tcConverging2(TC3_CS, CLK, MISO);
-static Adafruit_MAX31855 tcConverging3(TC4_CS, CLK, MISO);
-static Adafruit_MAX31855 tcThroat(TC5_CS, CLK, MISO);
-static Adafruit_MAX31855 tcDiverging(TC6_CS, CLK, MISO);
+static Adafruit_MAX31855 tcInjector(TC1_CS /*, CLK, MISO*/);
+static Adafruit_MAX31855 tcConverging1(TC2_CS /*, CLK, MISO*/);
+static Adafruit_MAX31855 tcConverging2(TC3_CS /*, CLK, MISO*/);
+static Adafruit_MAX31855 tcConverging3(TC4_CS /*, CLK, MISO*/);
+static Adafruit_MAX31855 tcThroat(TC5_CS /*, CLK, MISO*/);
+static Adafruit_MAX31855 tcDiverging(TC6_CS /*, CLK, MISO*/);
 
 void initalizeTC() {
     //max initialize
