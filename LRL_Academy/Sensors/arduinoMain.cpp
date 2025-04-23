@@ -7,6 +7,8 @@ static const int RE = 9;  // Control pin for MAX485
 
 void enableRS485Transmit();
 
+
+
 void setup() {
     Serial1.begin(9600);
 
@@ -21,7 +23,9 @@ void setup() {
 
 void loop() {
     readPT();
+    printPTReadings();
     readTC();
+    printTCReadings();
     delay(500);
 }
 
@@ -29,3 +33,6 @@ void enableRS485Transmit() { //recieves data from MAX485 to pc
     digitalWrite(DE, HIGH);
     digitalWrite(RE, HIGH);
 }
+
+
+

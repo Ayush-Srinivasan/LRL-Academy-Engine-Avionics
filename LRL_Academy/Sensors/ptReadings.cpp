@@ -21,10 +21,14 @@ static const int adc6 = 1; //AIN1 on ads2
 static const int adc7 = 2; //AIN2 on ads2
 static const int adc8 = 3; //AIN3 on ads2
 
+//pt values
+float ptReadings[8];
+
 // put function declarations here:
 float readPressureData(int16_t adcnumber, int PSI);
 void initalizeADS();
 void readPT();
+void printPTReadings();
 
 
 void initalizeADS() {
@@ -34,6 +38,7 @@ void initalizeADS() {
     while(1);
   }
   ads1.setGain(GAIN_TWOTHIRDS);
+  ads1.setDataRate(RATE_ADS1115_860SPS);
   
   if (!ads2.begin(0x49)) {
     Serial1.println("ADS2 failure");
@@ -41,6 +46,7 @@ void initalizeADS() {
   }
   ads2.setGain(GAIN_TWOTHIRDS);
     // ads.setGain(GAIN_TWOTHIRDS);  +/- 6.144V  1 bit = 0.1875mV (default)
+  ads2.setDataRate(RATE_ADS1115_860SPS);
 }
 
 void readPT() {
@@ -56,6 +62,16 @@ void readPT() {
     int16_t PT8 = ads2.readADC_SingleEnded(adc8);
   
   
+    ptReadings[0] = readPressureData(PT1, 300);
+    ptReadings[1] = readPressureData(PT2, 300);
+    ptReadings[2] = readPressureData(PT3, 300);
+    ptReadings[3] = readPressureData(PT4, 300);
+    ptReadings[4] = readPressureData(PT5, 300);
+    ptReadings[5] = readPressureData(PT6, 300);
+    ptReadings[6] = readPressureData(PT7, 300);
+    ptReadings[7] = readPressureData(PT8, 300);
+
+    /*
     //converts from voltage to psi 
     float PT01 = readPressureData(PT1, 300);
     float PT02 = readPressureData(PT2, 300);
@@ -66,6 +82,8 @@ void readPT() {
     float PT07 = readPressureData(PT7, 300);
     float PT08 = readPressureData(PT8, 300);
 
+    float ptReadings[8] = {PT01, PT02, PT03, PT04, PT05, PT06, PT07, PT08};
+   
     //use in abscence of GUI (prints data)
     Serial1.print("PT1: "); Serial1.println(PT01);
     Serial1.print("PT2: "); Serial1.println(PT02);
@@ -74,11 +92,22 @@ void readPT() {
     Serial1.print("PT5: "); Serial1.println(PT05);
     Serial1.print("PT6: "); Serial1.println(PT06);
     Serial1.print("PT7: "); Serial1.println(PT07);
-    Serial1.print("PT8: "); Serial1.println(PT08);
+    Serial1.print("PT8: "); Serial1.println(PT08);*/
 }
 
 float readPressureData(int16_t adcnumber, int PSI) {
     float voltage = adcnumber * ADS_Gain; // multiplies ADS values by gain value
     float pressure = PSI * ((voltage-0.5)/4); //converts voltage to psi
     return pressure; //returns pressure
+}
+
+void printPTReadings() { //prints all PT values in a csv format
+  Serial1.print("PT:");
+  for (int i = 0; i < 8; i++) {
+      Serial1.print(ptReadings[i]);
+      if (i < 7) {
+          Serial1.print(",");
+      }
+  }
+  Serial1.println();
 }

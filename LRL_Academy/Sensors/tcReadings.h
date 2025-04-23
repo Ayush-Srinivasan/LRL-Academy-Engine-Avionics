@@ -6,9 +6,11 @@
 #include "SPI.h"
 #include "Adafruit_MAX31855.h"
 
+extern float tcReadings[6];
+
 //TC read and setup functions
 void initalizeTC();
 void readTC();
-
+void printTCReadings();
 
 #endif

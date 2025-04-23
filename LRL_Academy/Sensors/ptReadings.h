@@ -6,12 +6,13 @@
 #include "Wire.h"
 #include "Adafruit_ADS1X15.h"
 
+extern float ptReadings[8];
 
 //functions 
 float readPressureData(int16_t adcnumber, int PSI);
 void initalizeADS();
 void readPT();
-
+void printPTReadings();
 
 
 #endif

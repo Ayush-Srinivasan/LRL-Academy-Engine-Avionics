@@ -25,6 +25,10 @@ static Adafruit_MAX31855 tcConverging3(TC4_CS /*, CLK, MISO*/);
 static Adafruit_MAX31855 tcThroat(TC5_CS /*, CLK, MISO*/);
 static Adafruit_MAX31855 tcDiverging(TC6_CS /*, CLK, MISO*/);
 
+//final tc values
+float tcReadings[6];
+void printTCReadings();
+
 void initalizeTC() {
     //max initialize
   if (!tcInjector.begin()) {
@@ -54,6 +58,15 @@ void initalizeTC() {
 }
 
 void readTC() {
+  // MAX31855 read data
+  tcReadings[0] = tcInjector.readCelsius();
+  tcReadings[1] = tcConverging1.readCelsius();
+  tcReadings[2] = tcConverging2.readCelsius();
+  tcReadings[3] = tcConverging3.readCelsius();
+  tcReadings[4] = tcThroat.readCelsius();
+  tcReadings[5] = tcDiverging.readCelsius();
+
+  /*
     // MAX31855 read data
   float InjectorTemp = tcInjector.readCelsius();
   float Converging1Temp = tcConverging1.readCelsius();
@@ -62,10 +75,24 @@ void readTC() {
   float ThroatTemp = tcThroat.readCelsius();
   float DivergingTemp = tcDiverging.readCelsius(); 
 
+  float tcReadings[6] = {InjectorTemp, Converging1Temp, Converging2Temp, Converging3Temp, ThroatTemp, DivergingTemp};
+
+ 
   Serial1.print("Injector Temperature: "); Serial1.println(InjectorTemp);
   Serial1.print("Top Wall Temp: "); Serial1.println(Converging1Temp);
   Serial1.print("Middle Wall Temp: "); Serial1.println(Converging2Temp);
   Serial1.print("Bottom Wall Temp: "); Serial1.println(Converging3Temp);
   Serial1.print("Throat Temp: "); Serial1.println(ThroatTemp);
-  Serial1.print("Exit Fuel Temp: "); Serial1.println(DivergingTemp);
+  Serial1.print("Exit Fuel Temp: "); Serial1.println(DivergingTemp);*/
+}
+
+void printTCReadings() { //prints all TC values in a csv format
+  Serial1.print("TC:");
+  for (int i = 0; i < 6; i++) {
+      Serial1.print(tcReadings[i]);
+      if (i < 5) {
+          Serial1.print(",");
+      }
+  }
+  Serial1.println();
 }
