@@ -12,7 +12,6 @@ extern float ptReadings[8];
 float readPressureData(int16_t adcnumber, int PSI);
 void initalizeADS();
 void readPT();
-void printPTReadings();
 
 
 #endif

@@ -28,7 +28,7 @@ float ptReadings[8];
 float readPressureData(int16_t adcnumber, int PSI);
 void initalizeADS();
 void readPT();
-void printPTReadings();
+//void printPTReadings();
 
 
 void initalizeADS() {
@@ -71,28 +71,15 @@ void readPT() {
     ptReadings[6] = readPressureData(PT7, 300);
     ptReadings[7] = readPressureData(PT8, 300);
 
-    /*
-    //converts from voltage to psi 
-    float PT01 = readPressureData(PT1, 300);
-    float PT02 = readPressureData(PT2, 300);
-    float PT03 = readPressureData(PT3, 300);
-    float PT04 = readPressureData(PT4, 300);
-    float PT05 = readPressureData(PT5, 300);
-    float PT06 = readPressureData(PT6, 300);
-    float PT07 = readPressureData(PT7, 300);
-    float PT08 = readPressureData(PT8, 300);
+    Serial1.print("PT:");
+    for (int i = 0; i < 8; i++) {
+        Serial1.print(ptReadings[i]);
+        if (i < 7) {
+            Serial1.print(",");
+        }
+    }
+    Serial1.println();
 
-    float ptReadings[8] = {PT01, PT02, PT03, PT04, PT05, PT06, PT07, PT08};
-   
-    //use in abscence of GUI (prints data)
-    Serial1.print("PT1: "); Serial1.println(PT01);
-    Serial1.print("PT2: "); Serial1.println(PT02);
-    Serial1.print("PT3: "); Serial1.println(PT03);
-    Serial1.print("PT4: "); Serial1.println(PT04);
-    Serial1.print("PT5: "); Serial1.println(PT05);
-    Serial1.print("PT6: "); Serial1.println(PT06);
-    Serial1.print("PT7: "); Serial1.println(PT07);
-    Serial1.print("PT8: "); Serial1.println(PT08);*/
 }
 
 float readPressureData(int16_t adcnumber, int PSI) {
@@ -101,13 +88,3 @@ float readPressureData(int16_t adcnumber, int PSI) {
     return pressure; //returns pressure
 }
 
-void printPTReadings() { //prints all PT values in a csv format
-  Serial1.print("PT:");
-  for (int i = 0; i < 8; i++) {
-      Serial1.print(ptReadings[i]);
-      if (i < 7) {
-          Serial1.print(",");
-      }
-  }
-  Serial1.println();
-}

@@ -8,6 +8,5 @@ void setup(){
 
 void loop() {
     readPT();
-    printPTReadings();
     delay(500);
 }

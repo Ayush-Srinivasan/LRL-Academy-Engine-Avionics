@@ -23,9 +23,7 @@ void setup() {
 
 void loop() {
     readPT();
-    printPTReadings();
     readTC();
-    printTCReadings();
     delay(500);
 }
 
