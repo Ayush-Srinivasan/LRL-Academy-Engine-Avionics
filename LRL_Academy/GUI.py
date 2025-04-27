@@ -5,10 +5,10 @@ import threading
 import time
 
 #serial port setup 
-'''
+
 serial_port = serial.Serial('COM5', 9600)
 print("accessing ", serial_port.port)
-'''
+
 
 # initalizing values
 tc_labels = ["Injector", "Chamber", "Throat", "Fuel"]
@@ -97,12 +97,12 @@ for i, label in enumerate(pt_labels):
 #handle window closing
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-'''
+
 # multithreading 
 thread = threading.Thread(target = read_serial)
 thread.daemon = True
 thread.start()
-'''
+
 # GUI updates
 update_gui()
 root.mainloop()
