@@ -5,10 +5,10 @@ import threading
 import time
 
 #serial port setup 
-
+'''
 serial_port = serial.Serial('COM5', 9600)
 print("accessing ", serial_port.port)
-
+'''
 
 # initalizing values
 tc_labels = ["Injector", "Chamber", "Throat", "Fuel"]
@@ -20,14 +20,14 @@ pt_values = [0, 0, 0, 0, 0, 0]
 running = True
 
 # GUI Style Setup 
-BACKGROUND_COLOR = "#121212"
+BACKGROUND_COLOR = "#121212" # Charcol Grey
 FOREGROUND_COLOR = "#228B22"  # Forest Green
 HEADER_FONT = ("Helvetica", 18, "bold")
 LABEL_FONT = ("Helvetica", 14)
 VALUE_FONT = ("Helvetica", 14, "bold")
 
-#reading serial port data
 
+#reading serial port data
 def read_serial():  
     while running:
         if serial_port.in_waiting:
@@ -59,7 +59,7 @@ def on_closing():
 #creating gui
 root = tk.Tk()
 root.title("CPP LRL Academy DAQ GUI")
-root.configure(bg="#121212")
+root.configure(bg=BACKGROUND_COLOR)
 
 # Set window size and center it
 window_width = 800
@@ -89,7 +89,7 @@ tk.Label(root, text="Pressure (psi)", font=HEADER_FONT, bg=BACKGROUND_COLOR, fg=
 
 pt_value_labels = []
 for i, label in enumerate(pt_labels):
-    tk.Label(root, text=label, font=LABEL_FONT, bg=BACKGROUND_COLOR, fg=FOREGROUND_COLOR).grid(row=i+1, column=2, sticky="w", padx=40)
+    tk.Label(root, text=label, font=LABEL_FONT, bg=BACKGROUND_COLOR, fg=FOREGROUND_COLOR).grid(row=i+1, column=2, sticky="w", padx=40) 
     value_label = tk.Label(root, text="-- psi", font=VALUE_FONT, bg=BACKGROUND_COLOR, fg=FOREGROUND_COLOR)
     value_label.grid(row=i+1, column=3, padx=10)
     pt_value_labels.append(value_label)
@@ -97,12 +97,12 @@ for i, label in enumerate(pt_labels):
 #handle window closing
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-
+'''
 # multithreading 
 thread = threading.Thread(target = read_serial)
 thread.daemon = True
 thread.start()
-
+'''
 # GUI updates
 update_gui()
 root.mainloop()
