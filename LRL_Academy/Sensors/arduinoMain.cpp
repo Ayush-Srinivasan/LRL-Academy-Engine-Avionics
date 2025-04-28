@@ -16,7 +16,7 @@ void setup() {
     pinMode(RE, OUTPUT);
 
     initalizeADS(); //initalizes ads 1115
-    initalizeTC(); //initalizes max31855
+    initializeTC(); //initalizes max31855
 
     enableRS485Transmit(); 
 }

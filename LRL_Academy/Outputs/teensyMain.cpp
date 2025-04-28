@@ -15,11 +15,11 @@ void setup () {
     while (true);
   }
 
-    Serial.print("IP Address: ");
-    Serial.println(Ethernet.localIP());
+  Serial.print("IP Address: ");
+  Serial.println(Ethernet.localIP());
 
-    server.begin();
-    Serial.println("TCP Serial Server started");
+  server.begin();
+  Serial.println("TCP Serial Server started");
   
 }
 

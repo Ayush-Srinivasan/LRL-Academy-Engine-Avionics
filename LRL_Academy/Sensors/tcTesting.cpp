@@ -8,6 +8,5 @@ void setup(){
 
 void loop() {
     readTC();
-    printTCReadings();
     delay(500);
 }

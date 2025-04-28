@@ -3,48 +3,54 @@ import tkinter as tk
 import serial
 import threading
 import time
+import serial.tools.list_ports
 
 #serial port setup 
 
 serial_port = serial.Serial('COM5', 9600)
 print("accessing ", serial_port.port)
 
+running = True
 
 # initalizing values
-tc_labels = ["Injector", "Chamber", "Throat", "Fuel"]
+tc_labels = ["Chamber","Converging", "Throat"]
 pt_labels = ["PT1", "PT2", "PT3", "PT4", "PT5", "PT6"]
 
-tc_values = [0, 0, 0, 0]
+tc_values = [0, 0, 0]
 pt_values = [0, 0, 0, 0, 0, 0]
 
-running = True
+
 
 # GUI Style Setup 
 BACKGROUND_COLOR = "#121212" # Charcol Grey
-FOREGROUND_COLOR = "#228B22"  # Forest Green
+FOREGROUND_COLOR =  "#228B22"  # Forest Green
 HEADER_FONT = ("Helvetica", 18, "bold")
 LABEL_FONT = ("Helvetica", 14)
 VALUE_FONT = ("Helvetica", 14, "bold")
 
 
 #reading serial port data
+
 def read_serial():  
     while running:
-        if serial_port.in_waiting:
-            line = serial_port.readline().decode().strip()
-            if line.startswith("TC:"):
-                data = line.replace("TC:", "").split(",")
-                for i in range(min(4,len(data))):
-                    tc_values[i] = data[i]
-            elif line.startswith("PT:"):
-                data = line.replace("PT:", "").split(",")
-                for i in range(min(6,len(data))):
-                    pt_values[i] = data[i]
+        try:
+            if serial_port.in_waiting:
+                line = serial_port.readline().decode().strip()
+                if line.startswith("TC:"):
+                    data = line.replace("TC:", "").split(",")
+                    for i in range(min(3,len(data))):
+                        tc_values[i] = data[i]
+                elif line.startswith("PT:"):
+                    data = line.replace("PT:", "").split(",")
+                    for i in range(min(6,len(data))):
+                        pt_values[i] = data[i]
             time.sleep(0.05)  #  sleep for 50 ms to reduce CPU usage
+        except Exception as e:
+            print("Serial Read Error: ", e)
 
 #updating GUI
 def update_gui():
-    for i in range(4):
+    for i in range(3):
         tc_value_labels[i].config(text=f"{tc_values[i]} °C")
     for i in range(6):
         pt_value_labels[i].config(text=f"{pt_values[i]} psi") 
