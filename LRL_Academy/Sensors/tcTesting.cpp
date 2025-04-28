@@ -3,7 +3,7 @@
 
 void setup(){
     Serial.begin(9600);
-    initalizeTC();
+    initializeTC();
 }
 
 void loop() {
