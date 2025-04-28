@@ -3,7 +3,6 @@ import tkinter as tk
 import serial
 import threading
 import time
-import serial.tools.list_ports
 
 #serial port setup 
 
