@@ -23,9 +23,16 @@ pt_values = [0, 0, 0, 0, 0, 0]
 # GUI Style Setup 
 BACKGROUND_COLOR = "#121212" # Charcol Grey
 FOREGROUND_COLOR =  "#228B22"  # Forest Green
+
+# brat mode
+#BACKGROUND_COLOR = "#8ACE00" # Lime Green
+#FOREGROUND_COLOR =  "#121212"  # Charcol Grey
+
+# fonts 
 HEADER_FONT = ("Helvetica", 18, "bold")
 LABEL_FONT = ("Helvetica", 14)
 VALUE_FONT = ("Helvetica", 14, "bold")
+FUNNI_FONT = ("Helvetica", 12, "italic")
 
 
 #reading serial port data
@@ -99,14 +106,20 @@ for i, label in enumerate(pt_labels):
     value_label.grid(row=i+1, column=3, padx=10)
     pt_value_labels.append(value_label)
 
+# Add meme text at bottom
+meme_text = tk.Label(root, text="it's giving... data", font=FUNNI_FONT, bg=BACKGROUND_COLOR, fg=FOREGROUND_COLOR)
+meme_text.place(x=300, y=370)  # Adjust position if needed
+
+
 #handle window closing
-root.protocol("WM_DELETE_WINDOW", on_closing)
+#root.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 # multithreading 
 thread = threading.Thread(target = read_serial)
 thread.daemon = True
 thread.start()
+
 
 # GUI updates
 update_gui()
