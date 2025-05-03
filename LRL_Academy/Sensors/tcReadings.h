@@ -1,15 +1,12 @@
 #ifndef TCREADINGS_H
 #define TCREADINGS_H
 
-//libraries
 #include "Arduino.h"
-#include "SPI.h"
-#include "Adafruit_MAX31855.h"
 
-extern float tcReadings[3];
-
-//TC read and setup functions
+// Initialize thermocouple system
 void initializeTC();
+
+// Read all thermocouples and print to Serial1
 void readTC();
 
-#endif
+#endif  // TCREADINGS_H
