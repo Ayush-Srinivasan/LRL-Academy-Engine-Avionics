@@ -19,8 +19,8 @@ PWMServo oxidizerFuelBallValve; // gox ball valve (2)
 PWMServo turbine1Valve; // turbine 1 N2 valve (3)
 PWMServo turbine2Valve; // turbine 2 N2 valve (4)
 PWMServo airBleedValve; // air bleed valve servo output (5)
-const int openPositions[6] = {180, 180, 180, 180, 180, 180}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
-const int closedPositions[6] = {0, 0, 0, 0, 0, 0}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
+const int openPositions[6] = {25, 27, 27, 35, 30, 28}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
+const int closedPositions[6] = {86, 87, 87, 97, 91, 90}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
 
 // extra PWM outputs
 const int gpPWMOutput1 = 5; // extra PWM for any extra stuff

@@ -6,27 +6,27 @@ import time
 
 #serial port setup 
 
-serial_port = serial.Serial('COM5', 9600)
+serial_port = serial.Serial('COM6', 9600)
 print("accessing ", serial_port.port)
 
 running = True
 
 # initalizing values
-tc_labels = ["Chamber","Converging", "Throat"]
+tc_labels = ["1", "2", "3", "4", "5"]
 pt_labels = ["PT1", "PT2", "PT3", "PT4", "PT5", "PT6"]
 
-tc_values = [0, 0, 0]
+tc_values = [0, 0, 0, 0, 0]
 pt_values = [0, 0, 0, 0, 0, 0]
 
 
 
 # GUI Style Setup 
-BACKGROUND_COLOR = "#121212" # Charcol Grey
-FOREGROUND_COLOR =  "#228B22"  # Forest Green
+#BACKGROUND_COLOR = "#121212" # Charcol Grey
+#FOREGROUND_COLOR =  "#228B22"  # Forest Green
 
 # brat mode
-#BACKGROUND_COLOR = "#8ACE00" # Lime Green
-#FOREGROUND_COLOR =  "#121212"  # Charcol Grey
+BACKGROUND_COLOR = "#8ACE00" # Lime Green
+FOREGROUND_COLOR =  "#121212"  # Charcol Grey
 
 # fonts 
 HEADER_FONT = ("Helvetica", 18, "bold")
@@ -44,7 +44,7 @@ def read_serial():
                 line = serial_port.readline().decode().strip()
                 if line.startswith("TC:"):
                     data = line.replace("TC:", "").split(",")
-                    for i in range(min(3,len(data))):
+                    for i in range(min(5,len(data))):
                         tc_values[i] = data[i]
                 elif line.startswith("PT:"):
                     data = line.replace("PT:", "").split(",")
@@ -56,7 +56,7 @@ def read_serial():
 
 #updating GUI
 def update_gui():
-    for i in range(3):
+    for i in range(5):
         tc_value_labels[i].config(text=f"{tc_values[i]} °C")
     for i in range(6):
         pt_value_labels[i].config(text=f"{pt_values[i]} psi") 
