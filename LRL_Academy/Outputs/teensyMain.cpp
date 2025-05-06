@@ -5,6 +5,7 @@
 using namespace qindesign::network;
 
 EthernetServer server(23);  // Port 23 = Telnet-style serial
+EthernetClient client;
 
 void setup () {
   Serial.begin(9600);
@@ -23,56 +24,68 @@ void setup () {
   
 }
 
+void handleCommand(const String& cmd) {
+  if (cmd == "o") {
+    openFuelOutlet();
+    client.println("Opened fuel outlet.");
+  } else if (cmd == "b") {
+    openBleedValve();
+    client.println("Opened bleed valve.");
+  } else if (cmd == "t") {
+    openTurbines();
+    client.println("Opened turbines.");
+  } else if (cmd == "v") {
+    closeBleedValve();
+    client.println("Closed bleed valve.");
+  } else if (cmd == "f") {
+    letsBurnThisCandle();
+    client.println("Firing sequence triggered.");
+  } else if (cmd == "s") {
+    shutDown();
+    client.println("Shutdown complete.");
+  } else if (cmd == "c") {
+    closeFuelOutlet();
+    client.println("Closed fuel outlet.");
+  } else if (cmd == "a") {
+    abort();
+    client.println("ABORT!");
+  } else if (cmd == "?") {
+    client.println("Commands:");
+    client.println("  o = open fuel outlet");
+    client.println("  b = open bleed valve");
+    client.println("  t = open turbines");
+    client.println("  v = close bleed valve");
+    client.println("  f = fire");
+    client.println("  s = shutdown");
+    client.println("  c = close fuel outlet");
+    client.println("  a = abort");
+  } else {
+    client.println("Unknown command.");
+  }
+}
+
 void loop() {
-  EthernetClient client = server.available();
-
-  if (client && client.connected()) {
-    if (client.available()) {
-      String cmd = client.readStringUntil('\n');
-      cmd.trim();
-      cmd.toLowerCase();
-
-      Serial.print("Command: ");
-      Serial.println(cmd);
-
-      if (cmd == "o") {
-        openFuelOutlet();
-        client.println("Opened fuel outlet.");
-      } else if (cmd == "b") {
-        openBleedValve();
-        client.println("Opened bleed valve.");
-      } else if (cmd == "t") {
-        openTurbines();
-        client.println("Opened turbines.");
-      } else if (cmd == "v") {
-        closeBleedValve();
-        client.println("Closed bleed valve.");
-      } else if (cmd == "f") {
-        letsBurnThisCandle();
-        client.println("Firing sequence triggered.");
-      } else if (cmd == "s") {
-        shutDown();
-        client.println("Shutdown complete.");
-      } else if (cmd == "c") {
-        closeFuelOutlet();
-        client.println("Closed fuel outlet.");
-      } else if (cmd == "a") {
-        abort();
-        client.println("ABORT!");
-      } else if (cmd == "?") {
-        client.println("Commands:");
-        client.println("  o = open fuel outlet");
-        client.println("  b = open bleed valve");
-        client.println("  t = open turbines");
-        client.println("  v = close bleed valve");
-        client.println("  f = fire");
-        client.println("  s = shutdown");
-        client.println("  c = close fuel outlet");
-        client.println("  a = abort");
-      } else {
-        client.println("Unknown command.");
-      }
+  // Accept new client
+  if (!client || !client.connected()) {
+    EthernetClient newClient = server.available();
+    if (newClient) {
+      if (client) client.stop();  // Clean up old client
+      client = newClient;
+      client.println("Connected to Teensy TCP server.");
+      Serial.println("Client connected.");
     }
+  }
+
+  // Read and handle incoming commands
+  if (client && client.connected() && client.available()) {
+    String cmd = client.readStringUntil('\n');
+    cmd.trim();
+    cmd.toLowerCase();
+
+    Serial.print("Command: ");
+    Serial.println(cmd);
+
+    handleCommand(cmd);
   }
 }
 
