@@ -1,19 +1,31 @@
 #include <Arduino.h>
-#include "PWMFunctions.h" //PWM functions
+#include "PWMFunctions.h" // PWM functions
 
-#include "QNEthernet.h" //ethernet library for teensy
-using namespace qindesign::network;
+#include "SPI.h" // SPI library for teensy
+#include "Ethernet.h" // Ethernet Libarary for teensy 
 
-EthernetServer server(23);  // Port 23 = Telnet-style serial
+const int W5500_CS = 12; // pin for CS
+
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+IPAddress ip(192, 168, 1, 100);  // Static IP
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+
+EthernetServer server(23);  // TCP server on port 23 (Telnet-style)
 EthernetClient client;
+
+
 
 void setup () {
   Serial.begin(9600);
+  Serial.begin(9600);
   initializeHardware();
 
-  if (!Ethernet.begin()) {
-    Serial.println("Ethernet failed to start");
-    while (true);
+  // Initialize Ethernet with W5500
+  Ethernet.init(W5500_CS);
+  if (!Ethernet.begin(mac)) {
+    Serial.println("DHCP failed, using static IP...");
+    Ethernet.begin(mac, ip, gateway, gateway, subnet);
   }
 
   Serial.print("IP Address: ");
@@ -65,18 +77,18 @@ void handleCommand(const String& cmd) {
 }
 
 void loop() {
-  // Accept new client
+  // Accept new client if not connected
   if (!client || !client.connected()) {
     EthernetClient newClient = server.available();
     if (newClient) {
-      if (client) client.stop();  // Clean up old client
+      if (client) client.stop();  // Close previous client if needed
       client = newClient;
       client.println("Connected to Teensy TCP server.");
       Serial.println("Client connected.");
     }
   }
 
-  // Read and handle incoming commands
+  // Handle incoming command
   if (client && client.connected() && client.available()) {
     String cmd = client.readStringUntil('\n');
     cmd.trim();
@@ -88,5 +100,4 @@ void loop() {
     handleCommand(cmd);
   }
 }
-
 
