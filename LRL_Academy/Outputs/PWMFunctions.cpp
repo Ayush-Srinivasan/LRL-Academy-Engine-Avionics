@@ -17,7 +17,7 @@ PWMServo mainFuelBallValve; // fuel inlet ball valve (0)
 PWMServo outletFuelBallValve; // fuel outlet ball valve (1)
 PWMServo oxidizerFuelBallValve; // gox ball valve (2)
 PWMServo turbine1Valve; // turbine 1 N2 valve (3)
-PWMServo turbine2Valve; // turbine 2 N2 valve (4)
+//PWMServo turbine2Valve; // turbine 2 N2 valve (4)
 PWMServo airBleedValve; // air bleed valve servo output (5)
 const int openPositions[6] = {25, 27, 27, 35, 30, 28}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
 const int closedPositions[6] = {86, 87, 87, 97, 91, 90}; //in order of inlet, outlet, oxidizer, turbine1, turbine2, bleed
@@ -49,8 +49,8 @@ void initializeHardware() { //system initialization
     outletFuelBallValve.attach(S3);
     oxidizerFuelBallValve.attach(S2);
     turbine1Valve.attach(S1);
-    turbine2Valve.attach(S8);
-    airBleedValve.attach(S7);
+    //turbine2Valve.attach(S8);
+    airBleedValve.attach(S8);
 
     // initalizes all pins
     pinMode(gpPWMOutput1, OUTPUT);
@@ -61,7 +61,7 @@ void initializeHardware() { //system initialization
     closedServo(outletFuelBallValve, 1); //closes servo 2
     closedServo(oxidizerFuelBallValve, 2); //closes servo 3
     closedServo(turbine1Valve, 3); //closes servo 4
-    closedServo(turbine2Valve, 4); //closes servo 5
+    //closedServo(turbine2Valve, 4); //closes servo 5
     closedServo(airBleedValve, 5); //closes servo 6
 
     // ensures all PWM and Pyro outputs start LOW
@@ -109,7 +109,7 @@ void closeBleedValve() { // closes fuel bleed valve (purges air from system)
 
 void openTurbines() { //opens up turbine valves as stated in procedures
     openServo(turbine1Valve, 3);
-    openServo(turbine2Valve, 4);
+    //openServo(turbine2Valve, 4);
 }
 
 
@@ -121,7 +121,7 @@ void letsBurnThisCandle() { //opens up turbine valves as stated in procedures
 
 void shutDown() {
     closedServo(turbine1Valve, 3);
-    closedServo(turbine2Valve, 4);
+    //closedServo(turbine2Valve, 4);
     closedServo(mainFuelBallValve, 0);
     closedServo(oxidizerFuelBallValve, 2);
 }

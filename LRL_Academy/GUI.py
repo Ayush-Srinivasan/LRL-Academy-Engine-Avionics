@@ -6,8 +6,8 @@ import time
 
 #serial port setup 
 
-serial_port = serial.Serial('COM6', 9600)
-print("accessing ", serial_port.port)
+'''serial_port = serial.Serial('COM6', 9600)
+print("accessing ", serial_port.port)'''
 
 running = True
 
@@ -36,7 +36,7 @@ FUNNI_FONT = ("Helvetica", 12, "italic")
 
 
 #reading serial port data
-
+'''
 def read_serial():  
     while running:
         try:
@@ -67,7 +67,7 @@ def on_closing():
     running = False
     serial_port.close()
     root.destroy()
-
+'''
 #creating gui
 root = tk.Tk()
 root.title("CPP LRL Academy DAQ GUI")
@@ -114,13 +114,13 @@ meme_text.place(x=300, y=370)  # Adjust position if needed
 #handle window closing
 #root.protocol("WM_DELETE_WINDOW", on_closing)
 
-
+'''''
 # multithreading 
 thread = threading.Thread(target = read_serial)
 thread.daemon = True
 thread.start()
-
+'''
 
 # GUI updates
-update_gui()
+#update_gui()
 root.mainloop()
