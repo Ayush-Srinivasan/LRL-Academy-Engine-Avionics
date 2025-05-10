@@ -41,7 +41,7 @@ void openTurbines();
 void letsBurnThisCandle();
 void shutDown();
 void closeFuelOutlet();
-void abort();
+void emergencyAbort()();
 
 void initializeHardware() { //system initialization
     // initalizes all servos
@@ -49,7 +49,6 @@ void initializeHardware() { //system initialization
     outletFuelBallValve.attach(S3);
     oxidizerFuelBallValve.attach(S2);
     turbine1Valve.attach(S1);
-    //turbine2Valve.attach(S8);
     airBleedValve.attach(S8);
 
     // initalizes all pins
@@ -61,7 +60,6 @@ void initializeHardware() { //system initialization
     closedServo(outletFuelBallValve, 1); //closes servo 2
     closedServo(oxidizerFuelBallValve, 2); //closes servo 3
     closedServo(turbine1Valve, 3); //closes servo 4
-    //closedServo(turbine2Valve, 4); //closes servo 5
     closedServo(airBleedValve, 5); //closes servo 6
 
     // ensures all PWM and Pyro outputs start LOW
@@ -109,7 +107,6 @@ void closeBleedValve() { // closes fuel bleed valve (purges air from system)
 
 void openTurbines() { //opens up turbine valves as stated in procedures
     openServo(turbine1Valve, 3);
-    //openServo(turbine2Valve, 4);
 }
 
 
@@ -121,7 +118,6 @@ void letsBurnThisCandle() { //opens up turbine valves as stated in procedures
 
 void shutDown() {
     closedServo(turbine1Valve, 3);
-    //closedServo(turbine2Valve, 4);
     closedServo(mainFuelBallValve, 0);
     closedServo(oxidizerFuelBallValve, 2);
 }
@@ -130,7 +126,7 @@ void closeFuelOutlet() {
     closedServo(outletFuelBallValve, 1);
 }
 
-void abort() {
+void emergencyAbort()() {
     shutDown();
     closeFuelOutlet();
 }

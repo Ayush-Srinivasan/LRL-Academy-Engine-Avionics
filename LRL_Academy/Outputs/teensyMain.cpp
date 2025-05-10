@@ -18,14 +18,13 @@ EthernetClient client;
 
 void setup () {
   Serial.begin(9600);
-  Serial.begin(9600);
   initializeHardware();
 
   // Initialize Ethernet with W5500
   Ethernet.init(W5500_CS);
   if (!Ethernet.begin(mac)) {
     Serial.println("DHCP failed, using static IP...");
-    Ethernet.begin(mac, ip, gateway, gateway, subnet);
+    Ethernet.begin(mac, ip, gateway, subnet);
   }
 
   Serial.print("IP Address: ");
@@ -59,7 +58,7 @@ void handleCommand(const String& cmd) {
     closeFuelOutlet();
     client.println("Closed fuel outlet.");
   } else if (cmd == "a") {
-    abort();
+    emergencyAbort();
     client.println("ABORT!");
   } else if (cmd == "?") {
     client.println("Commands:");

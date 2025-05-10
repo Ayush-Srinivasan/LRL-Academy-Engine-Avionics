@@ -10,7 +10,6 @@ extern PWMServo mainFuelBallValve;
 extern PWMServo outletFuelBallValve; 
 extern PWMServo oxidizerFuelBallValve; 
 extern PWMServo turbine1Valve; 
-//extern PWMServo turbine2Valve; 
 extern PWMServo airBleedValve; 
 
 extern const int openPositions[6]; // positions for open valves
@@ -38,6 +37,6 @@ void openTurbines();
 void letsBurnThisCandle();
 void shutDown();
 void closeFuelOutlet();
-void abort();
+void emergencyAbort();
 
 #endif // PWMFUNCTIONS_H
